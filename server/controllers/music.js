@@ -10,9 +10,6 @@ class musicController {
     else if (req.query.trackName) {
       url += `https://itunes.apple.com/search?term=${req.query.trackName}&limit=50`
     }
-    else if (req.query.collectionName) {
-      url += `https://itunes.apple.com/search?term=${req.query.collectionName}&limit=50`
-    }
     else if (req.query.musicVideo) {
       url += `https://itunes.apple.com/search?term=${req.query.q}&entity=musicVideo`
     }

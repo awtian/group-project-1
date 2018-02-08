@@ -6,6 +6,7 @@ const cors = require('cors')
 const index = require('./routes/index');
 const news = require('./routes/news');
 const music = require('./routes/music');
+const user = require('./routes/user');
 
 
 const app = express();
