@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var newsController = require('../controllers/news')
-/* GET users listing. */
+const express = require('express');
+const router = express.Router();
+const newsController = require('../controllers/news')
+
 router.get('/headline', newsController.headline);
 router.get('/search', newsController.search)
 router.get('/interest', newsController.interest)
