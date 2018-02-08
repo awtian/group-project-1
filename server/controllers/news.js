@@ -24,16 +24,6 @@ class newsController {
       .catch((err) => res.status(500).send(err))
   }
 
-  static interest (req, res) {
-    let interests = req.body.interests
-    let interestNewsCount = Math.ceil(20/(interest.length))
-
-    interest.forEach(element => {
-      axios.get()
-    });
-
-  }
-
 
 }
 

@@ -4,7 +4,6 @@ const newsController = require('../controllers/news')
 
 router.get('/headline', newsController.headline);
 router.get('/search', newsController.search)
-router.get('/interest', newsController.interest)
 
 
 module.exports = router;
