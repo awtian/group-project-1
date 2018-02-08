@@ -6,8 +6,13 @@ var cors = require('cors')
 
 var index = require('./routes/index');
 var news = require('./routes/news');
+var user = require('./routes/user');
 
 var app = express();
+
+// Mongoose setup
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/nemu');
 
 app.use(cors())
 app.use(logger('dev'));
@@ -16,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', index);
 app.use('/news', news);
+
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
