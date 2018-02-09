@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<html>
+
+<head>
+	<title>Login - Kepo</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+</head>
+
+<body class="loading">
+	<div id="wrapper">
+		<div id="bg"></div>
+		<div id="overlay"></div>
+		<div id="main">
+			<!-- Header -->
+			<header id="header">
+				<h1>K
+					<font color="red">EP</font>O</h1>
+				<p>Personal Interests &nbsp;&bull;&nbsp; News &nbsp;&bull;&nbsp; Music</p>
+				<div id="fb-root"></div>
+				<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true"
+				 data-use-continue-as="false" onlogin="checkLoginState()" scope="public_profile,email,publish_actions,user_likes,user_actions.music"></div>
+			</header>
+
+			<!-- Footer -->
+			<footer id="footer">
+				<span class="copyright">&copy; 2018. Created by
+					<a href="http://github.com">Kepo Team Work</a>.</span>
+			</footer>
+		</div>
+	</div>
+
+
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+
+	<script>
+
+		const rootapi = 'http://localhost:3000/'
+
+		window.onload = function () { document.body.className = ''; }
+		window.ontouchmove = function () { return false; }
+		window.onorientationchange = function () { document.body.scrollTop = 0; }
+
+		window.fbAsyncInit = function () {
+
+			var token = localStorage.getItem('accessToken')
+			console.log('token: ', token);
+
+			if (token != null) {
+				$(window).attr('location', '/index.html')
+			}
+			else {
+				FB.init({
+					appId: '161487791158384',
+					cookie: true,
+					xfbml: true,
+					version: 'v2.11'
+				});
+				FB.AppEvents.logPageView();
+			}
+		};
+
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+		function checkLoginState() {
+			FB.getLoginStatus(function (response) {
+
+				if (response.status === 'connected') {
+					localStorage.accessToken = response.authResponse.accessToken
+					localStorage.userId = response.authResponse.userID
+
+					sendTokenToServer(response.authResponse.accessToken);
+				}
+				else {
+					localStorage.removeItem("accessToken")
+					localStorage.removeItem("userId")
+					localStorage.removeItem("jwt")
+				}
+			});
+		};
+
+		function sendTokenToServer(token) {
+			$.ajax({
+				type: 'GET',
+				url: rootapi + 'fb_login/',
+				headers: { access_token: token },
+				success: function (resp) {					
+					FB.logout(function (response) {
+						localStorage.jwt = resp.token
+						$(window).attr('location', '/index.html')
+					});
+				},
+				error: function (error) {
+					console.error('Failed to login with Facebook');
+					console.log(error);
+				}
+			})
+
+		};
+	</script>
+</body>
+
+</html>
