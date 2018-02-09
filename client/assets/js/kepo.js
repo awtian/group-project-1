@@ -1,19 +1,22 @@
-(function($) {
+(function ($) {
   "use strict"; // Start of use strict
-  window.onload = function() { document.body.className = ''; }
 
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+  const rootapi = 'http://localhost:3000/'
 
-  var rootapi = 'http://localhost:3000/'
 
-  $(document).ready(function() {
+  window.onload = function () { document.body.className = ''; }
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+  $(document).ready(function () {
     function date(dateObject) {
       var d = new Date(dateObject);
       var day = d.getDate();
@@ -29,58 +32,15 @@
       return date;
     };
 
-    function sendTokenToServer(token) {
-      axios.get(rootapi + 'fb_login/', {
-        headers: { access_token : token }
-      })
-      .then(function (response) {
-          console.log('AXIOS response');
-          console.log(response.data);
-      })
-      .catch(function (error) {
-          console.error('Failed to login with Facebook');
-          console.log(error);
-      });
-    };
-
-    function statusChangeCallback(response) {
-			if (response.status === 'connected') {
-        sendTokenToServer(response.authResponse.accessToken);
-			} else {
-        $(window).attr('location', '/login.html')
-			}
-		};
-
-    function checkLoginState() {
-			FB.getLoginStatus(function(response) {
-				statusChangeCallback(response);
-			});
-		};
-
-    window.fbAsyncInit = function() {
-      FB.init({
-				appId      : '161487791158384',
-				cookie     : true,
-				xfbml      : true,
-				version    : 'v2.11'
-			});
-
-			FB.getLoginStatus(function(response) {
-				statusChangeCallback(response);
-			});
-		};
-
-    $('#logout').click(function(e) {
+    $('#logout').click(function (e) {
       e.preventDefault()
-      FB.logout(function(response) {
-        localStorage.removeItem("accessToken")
-        localStorage.removeItem("userId")
-        $(window).attr('location', '/login.html')
-      });
+      localStorage.removeItem("accessToken")
+      localStorage.removeItem("userId")
+      $(window).attr('location', '/login.html')
     })
 
     // Smooth scrolling using jQuery easing
-    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
       if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
         var target = $(this.hash);
         target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
@@ -95,7 +55,7 @@
     });
 
     // Closes responsive menu when a scroll trigger link is clicked
-    $('.js-scroll-trigger').click(function() {
+    $('.js-scroll-trigger').click(function () {
       $('.navbar-collapse').collapse('hide');
     });
 
@@ -107,9 +67,9 @@
     $.ajax({
       type: 'GET',
       url: rootapi + 'news',
-      success: function(resp) {
+      success: function (resp) {
         // console.log(resp.articles.length);
-        resp.articles.forEach(function(el) {
+        resp.articles.forEach(function (el) {
           if (el.description != null) {
             var author = (el.author) ? ' - ' + el.author : ''
             $('#content_news').append(`
@@ -128,7 +88,7 @@
           }
         })
       },
-      error: function(error) {
+      error: function (error) {
         console.error('Error');
       }
     });
@@ -136,9 +96,9 @@
     $.ajax({
       type: 'GET',
       url: rootapi + 'music/search?artistName=Jackson',
-      success: function(resp) {
+      success: function (resp) {
         // console.log(resp.results);
-        resp.results.forEach(function(el) {
+        resp.results.forEach(function (el) {
           var embeded = `<audio controls preload="none">
                           <source src="${el.previewUrl}" type="audio/m4a"/>
                           <source src="${el.previewUrl}" type="audio/ogg" />
@@ -162,7 +122,7 @@
             </div>`)
         })
       },
-      error: function(error) {
+      error: function (error) {
         console.error('Error');
       }
     })
