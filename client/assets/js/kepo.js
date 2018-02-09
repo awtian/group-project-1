@@ -97,39 +97,39 @@
       }
     });
 
-    $.ajax({
-      type: 'GET',
-      url: rootapi + 'music/search?artistName=Jackson',
-      success: function (resp) {
-        // console.log(resp.results);
-        resp.results.forEach(function (el) {
-          var embeded = `<audio controls preload="none">
-                          <source src="${el.previewUrl}" type="audio/m4a"/>
-                          <source src="${el.previewUrl}" type="audio/ogg" />
-                        </audio>`
-          if (el.previewUrl.split('.').pop() == 'm4v') {
-            embeded = `<video width="400" height="200" src="${el.previewUrl}" type="video/mp4" controls></video>`
-          }
-          $('#content_music').append(`
-            <div class="resume-item d-flex flex-column flex-md-row mb-5">
-              <div class="resume-content mr-auto">
-                <h4 class="mb-0">${el.artistName} - ${el.trackName}</h4>
-                <div class="subheading mb-3">${el.collectionCensoredName} (${el.primaryGenreName})</div>
-                ${embeded}
-              </div>
-              <div class="resume-date text-md-right">
-                <span class="text-primary">${moment(el.releaseDate).format('DD MMM YYYY')}</span>
-                <div>
-                  <div><img src="${el.artworkUrl100}" alt="" height="100"></div>
-                </div>
-              </div>
-            </div>`)
-        })
-      },
-      error: function (error) {
-        console.error('Error');
-      }
-    })
+    // $.ajax({
+    //   type: 'GET',
+    //   url: rootapi + 'music/search?artistName=Jackson',
+    //   success: function (resp) {
+    //     // console.log(resp.results);
+    //     resp.results.forEach(function (el) {
+    //       var embeded = `<audio controls preload="none">
+    //                       <source src="${el.previewUrl}" type="audio/m4a"/>
+    //                       <source src="${el.previewUrl}" type="audio/ogg" />
+    //                     </audio>`
+    //       if (el.previewUrl.split('.').pop() == 'm4v') {
+    //         embeded = `<video width="400" height="200" src="${el.previewUrl}" type="video/mp4" controls></video>`
+    //       }
+    //       $('#content_music').append(`
+    //         <div class="resume-item d-flex flex-column flex-md-row mb-5">
+    //           <div class="resume-content mr-auto">
+    //             <h4 class="mb-0">${el.artistName} - ${el.trackName}</h4>
+    //             <div class="subheading mb-3">${el.collectionCensoredName} (${el.primaryGenreName})</div>
+    //             ${embeded}
+    //           </div>
+    //           <div class="resume-date text-md-right">
+    //             <span class="text-primary">${moment(el.releaseDate).format('DD MMM YYYY')}</span>
+    //             <div>
+    //               <div><img src="${el.artworkUrl100}" alt="" height="100"></div>
+    //             </div>
+    //           </div>
+    //         </div>`)
+    //     })
+    //   },
+    //   error: function (error) {
+    //     console.error('Error');
+    //   }
+    // })
 
   })
 })(jQuery); // End of use strict

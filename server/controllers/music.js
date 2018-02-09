@@ -5,7 +5,7 @@ class musicController {
   static search_by(req, res) {
     let url = ``    
     if (req.query.artistName) {
-      url += `https://itunes.apple.com/search?term=${req.query.artistName}&limit=50`
+      url += `https://itunes.apple.com/search?term=${req.query.artistName}&limit=5`
     }
     else if (req.query.trackName) {
       url += `https://itunes.apple.com/search?term=${req.query.trackName}&limit=50`

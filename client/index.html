@@ -42,7 +42,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <h1>K<font color="red">EP</font>O</h1>
+            <h1>K
+                <font color="red">EP</font>O</h1>
             <ul class="navbar-nav">
                 <div id="status">
                 </div>
@@ -83,7 +84,7 @@
                             </span>
                         </a>
                     </li>
-                    
+
                 </ul>
             </div>
         </section>
@@ -128,7 +129,7 @@
                 url: rootapi + 'jwt/',
                 headers: { access_token: jwtToken },
                 success: function (simpleUserData) {
-                    console.log('======',simpleUserData.data.user.name)
+
                     let name = simpleUserData.data.user.name;
                     let email = simpleUserData.data.user.email;
 
@@ -136,12 +137,81 @@
                         type: 'GET',
                         url: rootapi + `user/${email}`,
                         success: function (userData) {
+
                             console.log(userData);
                             $('#user_photo').attr('src',`https://graph.facebook.com/${userData.fbid}/picture?type=large`);
-
                             $('#user_name').append(`${userData.name}`);
                             $('#user_email').append(`${userData.email}`);
                             $('#user_id').append(`${userData._id}`);
+
+                            let temp = '';
+
+                            var arrPromise = [];
+
+                            userData.music.forEach((item) => {
+                                arrPromise.push(new Promise(function (resolve, reject) {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: rootapi + 'music/search?artistName=' + item,
+                                        success: function (resp) {
+                                            resolve(resp)
+                                        },
+                                        error: function (error) {
+                                            reject(error);
+                                        }
+                                    })
+                                }));
+                            });
+
+                            Promise.all(arrPromise)
+                                .then(resp => {
+
+                                    resp.forEach(function (item, index) {
+
+                                        let temp = '';
+
+                                        if (temp != userData.music[index]) {
+                                            temp = userData.music[index];
+                                            $('#content_music').append(` <h3 class="mb-0"' >${userData.music[index]}</h3> <br/>`);
+                                        }
+
+
+                                        item.results.forEach(
+                                            function (el) {
+
+                                                var embeded = `<audio controls preload="none">
+                                        <source src="${el.previewUrl}" type="audio/m4a"/>
+                                        <source src="${el.previewUrl}" type="audio/ogg" />
+                                        </audio>`;
+
+                                                if (el.previewUrl.split('.').pop() == 'm4v') {
+                                                    embeded = `<video width="400" height="200" src="${el.previewUrl}" type="video/mp4" controls></video>`
+                                                }
+
+                                                $('#content_music').append(`
+                                            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+                                            <div class="resume-content mr-auto">
+                                               <h4 class="mb-0">&ensp;&ensp;&ensp;${el.artistName} - ${el.trackName}</h4>
+                                               <div class="subheading mb-3">&ensp;&ensp;&ensp;${el.collectionCensoredName} (${el.primaryGenreName})</div>
+                                               &ensp;&ensp;&ensp;${embeded}
+                                            </div>
+                                            <div class="resume-date text-md-right">
+                                                <span class="text-primary">${moment(el.releaseDate).format('DD MMM YYYY')}</span>
+                                                <div>
+                                                <div><img src="${el.artworkUrl100}" alt="" height="100"></div>
+                                                </div>
+                                            </div>
+                                            </div>`)
+                                            }
+
+                                        );
+
+                                    });
+
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                });
 
                         },
                         error: function (error) {
@@ -159,6 +229,7 @@
             })
 
         });
+
     </script>
 
 
