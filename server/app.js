@@ -11,7 +11,7 @@ const user = require('./routes/user');
 
 const app = express();
 
-Mongoose setup
+// Mongoose setup
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/nemu');
 
@@ -26,6 +26,10 @@ app.use('/', index);
 app.use('/user', user);
 app.use('/news', news);
 app.use('/music', music);
+
+
+require('dotenv').config();
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
