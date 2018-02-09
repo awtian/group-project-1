@@ -75,17 +75,20 @@
             var author = (el.author) ? ' - ' + el.author : ''
             $('#content_news').append(`
               <div class="resume-item d-flex flex-column flex-md-row mb-5">
+                
                 <div class="resume-content mr-auto">
                   <h4 class="mb-0"><a href="${el.url}" target="_blank">${el.title}</a></h4>
                   <div class="subheading mb-3">${el.source.name} ${author}</div>
                   <p>${el.description}</p>
                 </div>
+
                 <div class="resume-date text-md-right">
                   <span class="text-primary">${moment(el.publishedAt).format('DD MMM YYYY')}</span>
                   <div><img src="${el.urlToImage}" alt="" height="128"></div>
-                </div>
-                </div>
-              </div>`)
+                </div>                
+
+              </div>`
+            )
           }
         })
       },
