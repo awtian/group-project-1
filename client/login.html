@@ -37,11 +37,13 @@
 			window.onorientationchange = function() { document.body.scrollTop = 0; }
 
       window.fbAsyncInit = function() {
-	      if (localStorage.getItem('accessToken') != null) {
+				var token = localStorage.getItem('accessToken')
+	      console.log('token: ', token);
+	      if (token != null) {
 	        $(window).attr('location', '/index.html')
 	      } else {
 					FB.init({
-	          appId      : '389643448127142',
+	          appId      : '161487791158384',
 	          cookie     : true,
 	          xfbml      : true,
 	          version    : 'v2.11'
