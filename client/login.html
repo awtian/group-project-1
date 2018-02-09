@@ -37,9 +37,7 @@
 			window.onorientationchange = function() { document.body.scrollTop = 0; }
 
       window.fbAsyncInit = function() {
-				var token = localStorage.getItem('accessToken')
-	      console.log('token: ', token);
-	      if (token != null) {
+	      if (localStorage.getItem('accessToken') != null) {
 	        $(window).attr('location', '/index.html')
 	      } else {
 					FB.init({

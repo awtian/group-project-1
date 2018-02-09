@@ -13,7 +13,7 @@
 
   var rootapi = 'http://localhost:3000/'
 
-  $(document).ready(function() {
+  // $(document).ready(function() {
     function date(dateObject) {
       var d = new Date(dateObject);
       var day = d.getDate();
@@ -34,7 +34,6 @@
 				testAPI();
 			} else {
         $(window).attr('location', '/login.html')
-        document.getElementById('status').innerHTML = 'Please log into this app.';
 			}
 		};
 
@@ -52,19 +51,17 @@
       if (token == null) {
         $(window).attr('location', '/login.html')
       } else {
+        FB.init({
+  				appId      : token,
+  				cookie     : true,
+  				xfbml      : true,
+  				version    : 'v2.11'
+  			});
 
-
-        // FB.init({
-  			// 	appId      : token,
-  			// 	cookie     : true,
-  			// 	xfbml      : true,
-  			// 	version    : 'v2.11'
-  			// });
-        //
-  			// FB.getLoginStatus(function(response) {
-        //   console.log('1111111111');
-  			// 	statusChangeCallback(response);
-  			// });
+  			FB.getLoginStatus(function(response) {
+          console.log('1111111111');
+  				statusChangeCallback(response);
+  			});
       }
 		};
 
@@ -75,21 +72,34 @@
 			});
 		};
 
+    // $('#logout').click(function() {
+    //   FB.logout(function(response) {
+    //     console.log('logout: ', response);
+    //     // localStorage.clear();
+    //     // $(window).attr('location', '/login.html');
+    //   });
+    // })
+
     // Smooth scrolling using jQuery easing
     $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
       if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
         var target = $(this.hash);
         target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+        console.log(target);
         if (target.length) {
-          // console.log(target[0].id);
           $('html, body').animate({
             scrollTop: (target.offset().top)
           }, 1000, "easeInOutExpo");
-          // if (target[0].id == 'news') {
-          //   showNews()
-          // }
           return false;
-        }
+
+          // if (target[0].id == 'logout') {
+          //   console.log('run here');
+          //   localStorage.clear();
+          //   $(window).attr('location', '/login.html');
+          // } else {
+          //
+          // }
+        }         
       }
     });
 
@@ -107,7 +117,6 @@
       type: 'GET',
       url: rootapi + 'news',
       success: function(resp) {
-        console.log(resp.articles.length);
         resp.articles.forEach(function(el) {
           if (el.description != null) {
             var author = (el.author) ? ' - ' + el.author : ''
@@ -136,7 +145,6 @@
       type: 'GET',
       url: rootapi + 'music/search?artistName=Jackson',
       success: function(resp) {
-        console.log(resp.results);
         resp.results.forEach(function(el) {
           var embeded = `<audio controls preload="none">
                           <source src="${el.previewUrl}" type="audio/m4a"/>
@@ -164,7 +172,7 @@
       error: function(error) {
         console.error('Error');
       }
-    })
+    // })
 
   })
 })(jQuery); // End of use strict
