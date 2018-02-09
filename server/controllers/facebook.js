@@ -8,8 +8,6 @@ class facebookController {
 
     static getData(request, response) {
         
-        console.log('controllersss');
-        console.log(request.headers.access_token);
 
         FB.setAccessToken(request.headers.access_token);
         FB.api(
@@ -42,9 +40,12 @@ class facebookController {
                         {
                             email: userData.email
                         }, 
-                        {
+                        {   
+                            fbid: userData.id,
                             name : userData.name,
                             email: userData.email, 
+                            location: userData.location,
+                            picture: userData.picture,
                             language: userData.locale.slice(0, 2), 
                             countryCode: userData.locale.slice(3, 5),
                             music: arrMusic

@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
+  fbid: String,
   email : String,
   name : String,
+  location: String,
   language : String,
   countryCode: String,
+  picture: String,
   music: [String]
 })
 
 userSchema.statics.findOneOrCreate = function findOneOrCreate(condition, datauser, callback) {
   const self = this
-  console.log(condition)
-  console.log(datauser)
   self.findOne(condition, (err, result) => {
       return result 
       ? callback(err, result) 
