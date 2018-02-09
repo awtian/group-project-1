@@ -96,7 +96,7 @@
 				type: 'GET',
 				url: rootapi + 'fb_login/',
 				headers: { access_token: token },
-				success: function (resp) {
+				success: function (resp) {					
 					FB.logout(function (response) {
 						localStorage.jwt = resp.token
 						$(window).attr('location', '/index.html')

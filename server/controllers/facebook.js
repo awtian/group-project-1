@@ -8,7 +8,6 @@ class facebookController {
 
     static getData(request, response) {
         
-
         FB.setAccessToken(request.headers.access_token);
         FB.api(
             `/me`,
@@ -45,7 +44,7 @@ class facebookController {
                             name : userData.name,
                             email: userData.email, 
                             location: userData.location,
-                            picture: userData.picture,
+                            picture: userData.picture.data.url,
                             language: userData.locale.slice(0, 2), 
                             countryCode: userData.locale.slice(3, 5),
                             music: arrMusic
@@ -62,8 +61,7 @@ class facebookController {
                                     email : userdbdata.email
                                 }
                             }, 
-                            process.env.SECRET_KEY);
-
+                            process.env.SECRET_KEY);                            
                             response.send({token : token})
                         })
                     
