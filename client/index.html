@@ -31,8 +31,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <h1>K
-                <font color="red">EP</font>O</h1>
+            <h1>K<font color="red">EP</font>O</h1>
             <ul class="navbar-nav">
                 <div id="status">
                 </div>
@@ -113,7 +112,7 @@
                 url: rootapi + 'jwt/',
                 headers: { access_token: jwtToken },
                 success: function (simpleUserData) {
-
+                    console.log('======',simpleUserData.data.user.name)
                     let name = simpleUserData.data.user.name;
                     let email = simpleUserData.data.user.email;
 

@@ -36,6 +36,7 @@
       e.preventDefault()
       localStorage.removeItem("accessToken")
       localStorage.removeItem("userId")
+      localStorage.removeItem("jwt")
       $(window).attr('location', '/login.html')
     })
 
