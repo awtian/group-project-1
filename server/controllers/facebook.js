@@ -43,7 +43,7 @@ class facebookController {
                             fbid: userData.id,
                             name : userData.name,
                             email: userData.email, 
-                            location: userData.location,
+                            location: userData.location.name,
                             picture: userData.picture.data.url,
                             language: userData.locale.slice(0, 2), 
                             countryCode: userData.locale.slice(3, 5),
