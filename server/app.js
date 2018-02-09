@@ -11,9 +11,9 @@ const user = require('./routes/user');
 
 const app = express();
 
-// Mongoose setup
-// const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/nemu');
+Mongoose setup
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/nemu');
 
 app.use(cors())
 app.use(logger('dev'));

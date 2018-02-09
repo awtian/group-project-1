@@ -29,12 +29,25 @@
       return date;
     };
 
+    function sendTokenToServer(token) {
+      axios.get(rootapi + 'fb_login/', {
+        headers: { access_token : token }
+      })
+      .then(function (response) {
+          console.log('AXIOS response');
+          console.log(response.data);
+      })
+      .catch(function (error) {
+          console.error('Failed to login with Facebook');
+          console.log(error);
+      });
+    };
+
     function statusChangeCallback(response) {
 			if (response.status === 'connected') {
-				testAPI();
+        sendTokenToServer(response.authResponse.accessToken);
 			} else {
         $(window).attr('location', '/login.html')
-        document.getElementById('status').innerHTML = 'Please log into this app.';
 			}
 		};
 
@@ -45,35 +58,26 @@
 		};
 
     window.fbAsyncInit = function() {
-      var token = localStorage.getItem('accessToken')
-      var userID = localStorage.getItem('userId')
-      console.log('token: ', token);
-      console.log('userID: ', userID);
-      if (token == null) {
-        $(window).attr('location', '/login.html')
-      } else {
+      FB.init({
+				appId      : '161487791158384',
+				cookie     : true,
+				xfbml      : true,
+				version    : 'v2.11'
+			});
 
-
-        // FB.init({
-  			// 	appId      : token,
-  			// 	cookie     : true,
-  			// 	xfbml      : true,
-  			// 	version    : 'v2.11'
-  			// });
-        //
-  			// FB.getLoginStatus(function(response) {
-        //   console.log('1111111111');
-  			// 	statusChangeCallback(response);
-  			// });
-      }
-		};
-
-    function testAPI() {
-			console.log('Welcome!  Fetching your information.... ');
-			FB.api('/me', function(response) {
-				console.log('Successful login for: ' + response.name);
+			FB.getLoginStatus(function(response) {
+				statusChangeCallback(response);
 			});
 		};
+
+    $('#logout').click(function(e) {
+      e.preventDefault()
+      FB.logout(function(response) {
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("userId")
+        $(window).attr('location', '/login.html')
+      });
+    })
 
     // Smooth scrolling using jQuery easing
     $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
@@ -85,9 +89,6 @@
           $('html, body').animate({
             scrollTop: (target.offset().top)
           }, 1000, "easeInOutExpo");
-          // if (target[0].id == 'news') {
-          //   showNews()
-          // }
           return false;
         }
       }
@@ -107,7 +108,7 @@
       type: 'GET',
       url: rootapi + 'news',
       success: function(resp) {
-        console.log(resp.articles.length);
+        // console.log(resp.articles.length);
         resp.articles.forEach(function(el) {
           if (el.description != null) {
             var author = (el.author) ? ' - ' + el.author : ''
@@ -136,7 +137,7 @@
       type: 'GET',
       url: rootapi + 'music/search?artistName=Jackson',
       success: function(resp) {
-        console.log(resp.results);
+        // console.log(resp.results);
         resp.results.forEach(function(el) {
           var embeded = `<audio controls preload="none">
                           <source src="${el.previewUrl}" type="audio/m4a"/>
