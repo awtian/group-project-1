@@ -4,7 +4,7 @@ var userSchema = mongoose.Schema({
   fbid: String,
   email : String,
   name : String,
-  location: String,
+  // location: String,
   language : String,
   countryCode: String,
   picture: String,

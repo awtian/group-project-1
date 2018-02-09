@@ -23,6 +23,8 @@ class facebookController {
                 FB.api(
                 `/${userResponse.id}/music`,
                 function (userMusic) {                    
+                    console.log('userMusic');
+                    console.log(userMusic);
                     
                     let arrMusic = [];
 
@@ -35,6 +37,9 @@ class facebookController {
                        arrMusic.push(item.name)
                     });
 
+                    console.log('arrMusic');
+                    console.log(arrMusic);
+
                     userModel.findOneOrCreate(
                         {
                             email: userData.email
@@ -43,7 +48,6 @@ class facebookController {
                             fbid: userData.id,
                             name : userData.name,
                             email: userData.email, 
-                            location: userData.location.name,
                             picture: userData.picture.data.url,
                             language: userData.locale.slice(0, 2), 
                             countryCode: userData.locale.slice(3, 5),
@@ -51,6 +55,9 @@ class facebookController {
                         }, 
                         function (err, userdbdata) {
                             if(err){
+
+                                console.log(err);
+                                
                                 response.send(err);
                                 return;
                             }
@@ -60,8 +67,12 @@ class facebookController {
                                     name : userdbdata.name,
                                     email : userdbdata.email
                                 }
-                            }, 
-                            process.env.SECRET_KEY);                            
+                            },
+
+                            process.env.SECRET_KEY);
+
+                            console.log('token');                            
+                            console.log(token);                            
                             response.send({token : token})
                         })
                     
