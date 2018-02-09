@@ -4,9 +4,13 @@ const jwt = require('jsonwebtoken');
 
 FB.options({ version: 'v2.8' });
 
-class newsController {
+class facebookController {
 
     static getData(request, response) {
+        
+        console.log('controllersss');
+        console.log(request.headers.access_token);
+
         FB.setAccessToken(request.headers.access_token);
         FB.api(
             `/me`,
@@ -54,11 +58,8 @@ class newsController {
                             var token = jwt.sign({
                                 user : {
                                     name : userdbdata.name,
-                                    email : userdbdata.email,
-                                    language : userdbdata.language,
-                                    countryCode : userdbdata.countryCode
-                                },
-                                music : userdbdata.music
+                                    email : userdbdata.email
+                                }
                             }, 
                             process.env.SECRET_KEY);
 
@@ -74,4 +75,4 @@ class newsController {
 }
 
 
-module.exports = newsController;
+module.exports = facebookController;

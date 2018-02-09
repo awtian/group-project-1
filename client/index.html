@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -15,100 +16,81 @@
     <link href="assets/css/resume.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  </head>
-  <body id="page-top">
+</head>
+
+<body id="page-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-block d-lg-none">KEPO (Personal Interests)</span>
-        <span class="d-none d-lg-block">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="">
-        </span>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <h1>K<font color="red">EP</font>O</h1>
-        <ul class="navbar-nav">
-          <div id="status">
-				  </div>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#news">News</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#music">Music</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" id="logout" href="#">Logout</a>
-          </li>
-        </ul>
-      </div>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">
+            <span class="d-block d-lg-none">KEPO (Personal Interests)</span>
+            <span class="d-none d-lg-block">
+                <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="">
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <h1>K
+                <font color="red">EP</font>O</h1>
+            <ul class="navbar-nav">
+                <div id="status">
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#news">News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#music">Music</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" id="logout" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <div class="container-fluid p-0">
 
-      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
-        <div class="my-auto">
-          <h1 class="mb-0">Clarence
-            <span class="text-primary">Taylor</span>
-          </h1>
-          <div class="subheading mb-5">3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 ·
-            <a href="mailto:name@email.com">name@email.com</a>
-          </div>
-          <p class="mb-5">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
-          <ul class="list-inline list-social-icons mb-0">
-            <li class="list-inline-item">
-              <a href="#">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
+            <div class="my-auto">
+                <h1 class="mb-0">
+                    <span id="user_name" class="text-primary"></span>
+                </h1>
+                <div id="user_address" class="subheading mb-5">
+                    <a id="user_email" href="mailto:name@email.com"></a>
+                </div>
 
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="news">
-        <div class="my-auto">
-          <h2 class="mb-5">News</h2>
-          <div id="content_news"></div>
-        </div>
-      </section>
+                <!-- <p class="mb-5">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p> -->
+                <ul class="list-inline list-social-icons mb-0">
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </section>
 
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="music">
-        <div class="my-auto">
-          <h2 class="mb-5">Music</h2>
-          <div id="content_music"></div>
-        </div>
-      </section>
+        <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="news">
+            <div class="my-auto">
+                <h2 class="mb-5">News</h2>
+                <div id="content_news"></div>
+            </div>
+        </section>
+
+        <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="music">
+            <div class="my-auto">
+                <h2 class="mb-5">Music</h2>
+                <div id="content_music"></div>
+            </div>
+        </section>
 
     </div>
 
@@ -118,5 +100,50 @@
     <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="assets/js/kepo.js"></script>
 
-  </body>
+
+    <script>
+        const rootapi = 'http://localhost:3000/'
+
+        $(document).ready(function () {
+
+            let jwtToken = localStorage.getItem('jwt');
+
+            $.ajax({
+                type: 'GET',
+                url: rootapi + 'jwt/',
+                headers: { access_token: jwtToken },
+                success: function (simpleUserData) {
+
+                    let name = simpleUserData.data.user.name;
+                    let email = simpleUserData.data.user.email;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: rootapi + `user/${email}`,
+                        success: function (userData) {
+                            console.log(userData);
+
+                            $('#user_name').append(`${userData.name}`);
+                            $('#user_email').append(`${userData.email}`);
+
+                        },
+                        error: function (error) {
+                            console.error('Failed to load user data');
+                            console.log(error);
+                        }
+                    })
+
+
+                },
+                error: function (error) {
+                    console.error('Failed to decode data');
+                    console.log(error);
+                }
+            })
+
+        });
+    </script>
+
+</body>
+
 </html>
