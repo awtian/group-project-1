@@ -17,6 +17,7 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/resume.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body id="page-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
@@ -225,6 +226,71 @@
         </div>
       </section> -->
 
+ 
+
+      <script>
+        function sendTokenToServer(token) {
+          axios.get(
+              'http://localhost:3000/fb_login/',
+              {
+                  headers: { access_token : token}
+              })
+              .then(function (response) {
+                  console.log('AXIOS response');
+                  console.log(response.data);
+              })
+              .catch(function (error) {
+                  console.error('Failed to login with Facebook');
+                  console.log(error);
+              });
+        }
+
+        function statusChangeCallback(response) {
+
+            if (response.status === 'connected') {
+                sendTokenToServer(response.authResponse.accessToken);
+            }
+            else {
+                // The person is not logged into your app or we are unable to tell.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                    'into this app.';
+            }
+        }
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '161487791158384',
+                cookie: true,  // enable cookies to allow the server to access 
+                // the session
+                xfbml: true,  // parse social plugins on this page
+                version: 'v2.8' // use graph api version 2.8
+            });
+
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+
+        };
+
+        // Load the SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+    <fb:login-button scope="public_profile,email,user_likes,user_actions.music,user_location" onlogin="checkLoginState();">
+    </fb:login-button>
+
+    <div id="status">
     </div>
 
     <!-- Bootstrap core JavaScript -->
