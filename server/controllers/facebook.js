@@ -1,5 +1,6 @@
 var FB = require('fb');
 FB.options({ version: 'v2.8' });
+const userModel = require('../models/user')
 
 class newsController {
 
@@ -18,16 +19,35 @@ class newsController {
 
                 FB.api(
                 `/${userResponse.id}/music`,
-                function (userMusic) {
+                function (userMusic) {                    
+                    
+                    let arrMusic = [];
+
                     if (!userMusic || userMusic.error) {
-                        response.send(!userMusic ? 'error occurred' : userMusic.error);
-                        return;
+                       response.send(!userMusic ? 'error occurred' : userMusic.error);
+                       return;
                     }
 
-                    response.send( {
-                        user : userData,
-                        music : userMusic
+                    userMusic.data.forEach( function(item){
+                       arrMusic.push(item.name)
                     });
+
+                    userModel.findOneOrCreate(
+                        {email: userData.email}, 
+                        {email: userData.email, 
+                        language: userData.locale.slice(0, 2), 
+                        countryCode: userData.locale.slice(3, 5),
+                        music: arrMusic}, 
+                        (err, userdbdata) => {
+                            err? response.send(err) : response.send({userdbdata})
+                        })
+                    
+
+
+                    // response.send( {
+                    //     user : userData,
+                    //     music : userMusic
+                    // });
                     
                 });
 
@@ -36,5 +56,6 @@ class newsController {
     }
 
 }
+
 
 module.exports = newsController;
