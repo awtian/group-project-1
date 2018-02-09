@@ -1,6 +1,8 @@
-var FB = require('fb');
-FB.options({ version: 'v2.8' });
+const FB = require('fb');
 const userModel = require('../models/user')
+const jwt = require('jsonwebtoken');
+
+FB.options({ version: 'v2.8' });
 
 class newsController {
 
@@ -33,21 +35,35 @@ class newsController {
                     });
 
                     userModel.findOneOrCreate(
-                        {email: userData.email}, 
-                        {email: userData.email, 
-                        language: userData.locale.slice(0, 2), 
-                        countryCode: userData.locale.slice(3, 5),
-                        music: arrMusic}, 
-                        (err, userdbdata) => {
-                            err? response.send(err) : response.send({userdbdata})
+                        {
+                            email: userData.email
+                        }, 
+                        {
+                            name : userData.name,
+                            email: userData.email, 
+                            language: userData.locale.slice(0, 2), 
+                            countryCode: userData.locale.slice(3, 5),
+                            music: arrMusic
+                        }, 
+                        function (err, userdbdata) {
+                            if(err){
+                                response.send(err);
+                                return;
+                            }
+
+                            var token = jwt.sign({
+                                user : {
+                                    name : userdbdata.name,
+                                    email : userdbdata.email,
+                                    language : userdbdata.language,
+                                    countryCode : userdbdata.countryCode
+                                },
+                                music : userdbdata.music
+                            }, 
+                            process.env.SECRET_KEY);
+
+                            response.send({token : token})
                         })
-                    
-
-
-                    // response.send( {
-                    //     user : userData,
-                    //     music : userMusic
-                    // });
                     
                 });
 
